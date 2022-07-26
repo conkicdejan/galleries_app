@@ -21,13 +21,61 @@ function* getGalleriesHandler({ payload }) {
   }
 }
 
-function* addGalleryHandler({ payload }) {}
+function* addGalleryHandler({ payload }) {
+  yield put(setCreateErrors(null));
+  try {
+    yield call(GalleryService.create, payload.gallery);
+    if (typeof payload.meta?.onSuccess === 'function') {
+      yield call(payload.meta.onSuccess);
+    }
+  } catch (error) {
+    console.log('addGalleryHandler', error);
+    if (error.response.status === 422) {
+      yield put(setCreateErrors(error.response.data.errors));
+    }
+  }
+}
 
-function* getGalleryHandler({ payload }) {}
+function* getGalleryHandler({ payload }) {
+  yield put(setGallery(null));
+  try {
+    const gallery = yield call(GalleryService.getById, payload.id);
+    yield put(setGallery(gallery));
+  } catch (error) {
+    console.log('get all gallery', error);
+    if (error.response.status === 404) {
+      if (typeof payload.meta?.onNotFound === 'function') {
+        yield call(payload.meta.onNotFound);
+      }
+    }
+  }
+}
 
-function* editGalleryHandler({ payload }) {}
+function* editGalleryHandler({ payload }) {
+  yield put(setCreateErrors(null));
+  try {
+    yield call(GalleryService.edit, payload.id, payload.gallery);
+    if (typeof payload.meta?.onSuccess === 'function') {
+      yield call(payload.meta.onSuccess);
+    }
+  } catch (error) {
+    console.log('addGalleryHandler', error);
+    if (error.response.status === 422) {
+      yield put(setCreateErrors(error.response.data.errors));
+    }
+  }
+}
 
-function* deleteGalleryHandler({ payload }) {}
+function* deleteGalleryHandler({ payload }) {
+  try {
+    yield call(GalleryService.delete, payload.id);
+    if (typeof payload.meta?.onDelete === 'function') {
+      yield call(payload.meta.onDelete);
+    }
+  } catch (error) {
+    console.log('deleteGalleryHandler', error);
+  }
+}
 
 export function* watchAddGallery() {
   yield takeLatest(createGallery.type, addGalleryHandler);

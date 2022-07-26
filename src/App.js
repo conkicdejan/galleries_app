@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     isAuthenticated && dispatch(getActiveUser());
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <BrowserRouter>
@@ -27,12 +27,13 @@ function App() {
         <Navbar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route path="/" element={<Galleries />} />
-          <Route path="/author/:id" element={<Galleries />} />
+          <Route path="/authors/:id" element={<Galleries />} />
           <Route path="/galleries/:id" element={<Gallery />} />
 
           <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
             <Route path="/my-galleries" element={<Galleries />} />
             <Route path="/create" element={<CreateGallery />} />
+            <Route path="/edit-gallery/:id" element={<CreateGallery />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
 

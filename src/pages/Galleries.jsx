@@ -2,13 +2,21 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGalleries, selectGalleries } from '../store/gallery';
 import GalleryComponent from './../components/GalleryComponent';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { selectAuthUser } from '../store/auth';
 
 function Galleries() {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  let { id } = useParams();
+  const authUser = useSelector(selectAuthUser);
+  const { pathname } = useLocation();
   const galleries = useSelector(selectGalleries);
   let title = 'Galleries';
+
+  if (!id && pathname === '/my-galleries') {
+    title = 'My galleries';
+    id = authUser?.id;
+  }
   useEffect(() => {
     dispatch(getGalleries({ author: id }));
   }, [id]);

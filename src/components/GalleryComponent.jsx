@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import formatDate from './fromatDate';
+import formatDate from './formatDate';
 
 function GalleryComponent({ gallery }) {
   const { id, name, created_at, first_image, user } = gallery;
@@ -14,7 +14,7 @@ function GalleryComponent({ gallery }) {
               <h5 className="card-title">{name}</h5>
             </Link>
             <p className="card-text">
-              <Link to={`/author/${user.id}`}>
+              <Link to={`/authors/${user.id}`}>
                 {user?.first_name} {user?.last_name}
               </Link>
             </p>
