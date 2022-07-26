@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectAuthUser } from '../store/auth/index';
 
 function Navbar({ isAuthenticated }) {
-  
+  const user = useSelector(selectAuthUser);
+
   return (
     <>
       <nav className="navbar navbar-expand sticky-top navbar-dark bg-dark">
@@ -26,6 +29,9 @@ function Navbar({ isAuthenticated }) {
           <div className="navbar-nav">
             {isAuthenticated && (
               <div className="d-flex">
+                <div className="nav-link">
+                  {user?.first_name} {user?.last_name}
+                </div>
                 <Link to="/logout" className="nav-link">
                   Logout
                 </Link>

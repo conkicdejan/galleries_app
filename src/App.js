@@ -8,9 +8,18 @@ import CreateGallery from './pages/CreateGallery';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Logout from './pages/Logout';
+import { useSelector, useDispatch } from 'react-redux';
+import { getActiveUser, selectIsAuth } from './store/auth/index';
+import { useEffect } from 'react';
 
 function App() {
-  const isAuthenticated = false; //fake for now
+  const isAuthenticated = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    isAuthenticated && dispatch(getActiveUser());
+  }, []);
+
   return (
     <BrowserRouter>
       <>

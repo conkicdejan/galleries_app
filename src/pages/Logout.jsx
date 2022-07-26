@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/auth/index';
 
 function Logout() {
-  return (
-    <div>Logout</div>
-  )
+  const dispatch = useDispatch();
+
+  dispatch(logout());
 }
 
-export default Logout
+export default Logout;
