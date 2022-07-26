@@ -11,6 +11,7 @@ import Logout from './pages/Logout';
 import { useSelector, useDispatch } from 'react-redux';
 import { getActiveUser, selectIsAuth } from './store/auth/index';
 import { useEffect } from 'react';
+import Gallery from './pages/Gallery';
 
 function App() {
   const isAuthenticated = useSelector(selectIsAuth);
@@ -26,6 +27,8 @@ function App() {
         <Navbar isAuthenticated={isAuthenticated} />
         <Routes>
           <Route path="/" element={<Galleries />} />
+          <Route path="/author/:id" element={<Galleries />} />
+          <Route path="/galleries/:id" element={<Gallery />} />
 
           <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
             <Route path="/my-galleries" element={<Galleries />} />
