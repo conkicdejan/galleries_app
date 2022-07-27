@@ -24,7 +24,7 @@ function CreateGallery() {
   });
   const createErrors = useSelector(selectCreateErrors);
 
-  // If id param exist -> get gallery
+  // If id param exist -> get gallery, if gallery doesn't exit -> redirect
   useEffect(() => {
     if (id) {
       dispatch(
@@ -38,14 +38,9 @@ function CreateGallery() {
     }
   }, [id]);
 
-  // If gallery belongs to the user -> fill the form
+  // when gallery and auth user loading are finished -> fill the form
   useEffect(() => {
-    if (
-      id &&
-      galleryForUpdate &&
-      authUser?.id &&
-      galleryForUpdate?.user_id === authUser?.id
-    ) {
+    if (id && galleryForUpdate && authUser?.id) {
       const { name, description, images } = galleryForUpdate;
       const url = images?.map(({ url }) => url);
       setGallery({ name, description, url });
@@ -88,7 +83,7 @@ function CreateGallery() {
     });
   };
 
-  // show loading... while data is loading, if gallery does not exist -> redirect
+  // while gallery and auth user are loading -> show loading..., when finished if gallery isn't mine -> redirect
   if (id && (!galleryForUpdate || !authUser?.id)) {
     return <div>Loading...</div>;
   } else if (id && galleryForUpdate?.user_id !== authUser?.id) {
