@@ -8,4 +8,9 @@ export {
   getGallery,
   editGallery,
   deleteGallery,
+  addComment,
+  deleteComment,
+  setAddCommentErrors,
+  setNewComment,
+  setDeletedComment,
 } from './slice';

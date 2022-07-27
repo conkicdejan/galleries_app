@@ -13,3 +13,7 @@ export function selectGallery(state) {
 export function selectCurrentPage(state) {
   return state.gallery.galleries?.current_page;
 }
+
+export function selectAddCommentErrors(state) {
+  return state.gallery.addCommentErrors;
+}

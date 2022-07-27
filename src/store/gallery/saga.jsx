@@ -2,20 +2,26 @@ import {
   setCreateErrors,
   setGalleries,
   setGallery,
+  setAddCommentErrors,
+  setNewComment,
+  setDeletedComment,
   createGallery,
   getGalleries,
   getGallery,
   editGallery,
   deleteGallery,
+  addComment,
+  deleteComment,
 } from './index';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import GalleryService from './../../services/GalleryService';
+import CommentService from '../../services/CommentService';
 
 function* getGalleriesHandler({ payload }) {
   try {
     const galleries = yield call(GalleryService.getAll, payload);
     yield put(setGalleries(galleries));
-    console.log(galleries);
+    // console.log(galleries);
   } catch (error) {
     console.log('get all galleries', error);
   }
@@ -77,6 +83,31 @@ function* deleteGalleryHandler({ payload }) {
   }
 }
 
+function* addCommentHandler({ payload }) {
+  yield put(setAddCommentErrors(null));
+  try {
+    const comment = yield call(CommentService.add, payload.id, payload.content);
+    yield put(setNewComment(comment));
+    if (typeof payload.meta?.onSuccess === 'function') {
+      yield call(payload.meta.onSuccess);
+    }
+  } catch (error) {
+    console.log('addCommentHandler', error);
+    if (error.response.status === 422) {
+      yield put(setAddCommentErrors(error.response.data.errors));
+    }
+  }
+}
+
+function* deleteCommentHandler({ payload }) {
+  try {
+    yield call(CommentService.delete, payload);
+    yield put(setDeletedComment(payload));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* watchAddGallery() {
   yield takeLatest(createGallery.type, addGalleryHandler);
 }
@@ -91,4 +122,10 @@ export function* watchEditGallery() {
 }
 export function* watchDeleteGallery() {
   yield takeLatest(deleteGallery.type, deleteGalleryHandler);
+}
+export function* watchAddComment() {
+  yield takeLatest(addComment.type, addCommentHandler);
+}
+export function* watchDeleteComment() {
+  yield takeLatest(deleteComment.type, deleteCommentHandler);
 }

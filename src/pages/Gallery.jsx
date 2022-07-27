@@ -8,6 +8,8 @@ import {
 } from '../store/gallery/index';
 import formatDate from '../components/formatDate';
 import { selectAuthUser } from '../store/auth';
+import CommentForm from '../components/CommentForm';
+import Comment from './../components/Comment';
 
 function SingleGallery() {
   const navigate = useNavigate();
@@ -16,7 +18,6 @@ function SingleGallery() {
   const { id } = useParams();
 
   const gallery = useSelector(selectGallery);
-  // console.log(gallery);
 
   function handleNotFoundAction() {
     navigate('/', { replace: true });
@@ -42,9 +43,8 @@ function SingleGallery() {
     images,
     description,
     user,
+    comments,
   } = gallery;
-
-  const date = formatDate(created_at);
 
   function handleDeleteSuccess() {
     navigate('/my-galleries');
@@ -92,16 +92,24 @@ function SingleGallery() {
       <p>
         author:{' '}
         <Link to={`/authors/${user?.id}`}>
-          {user.first_name} {user.last_name}
+          {user?.first_name} {user?.last_name}
         </Link>
       </p>
-      <p>created at: {date}</p>
+      <p>created at: {formatDate(created_at)}</p>
       <p>description: {description}</p>
       {images.map((image, index) => (
         <a key={index} href={image.url} target="_blank" rel="noreferrer">
           <img src={image.url} className="img-thumbnail h200" alt="gallery" />
         </a>
       ))}
+      <div className="mb-5">
+        {comments?.map((comment, index) => (
+          <div key={index} className="card mt-2">
+            <Comment comment={comment} />
+          </div>
+        ))}
+        {authUser?.id && <CommentForm />}
+      </div>
     </div>
   );
 }
