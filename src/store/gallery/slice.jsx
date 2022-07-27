@@ -25,6 +25,15 @@ const gallerySlice = createSlice({
     setGalleries(state, { payload }) {
       state.galleries = payload;
     },
+    appendGalleries: (state, { payload }) => {
+      state.galleries = {
+        ...payload,
+        data: [...state.galleries.data, ...payload.data],
+      };
+    },
+    setCurrentPage: (state, action) => {
+      state.galleries.current_page = action.payload;
+    },
     setGallery(state, { payload }) {
       state.gallery = payload;
     },
@@ -51,6 +60,8 @@ export const {
   setAddCommentErrors,
   setNewComment,
   setDeletedComment,
+  appendGalleries,
+  setCurrentPage,
 
   createGallery,
   getGalleries,

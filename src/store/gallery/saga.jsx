@@ -12,6 +12,7 @@ import {
   deleteGallery,
   addComment,
   deleteComment,
+  appendGalleries,
 } from './index';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 import GalleryService from './../../services/GalleryService';
@@ -20,8 +21,11 @@ import CommentService from '../../services/CommentService';
 function* getGalleriesHandler({ payload }) {
   try {
     const galleries = yield call(GalleryService.getAll, payload);
-    yield put(setGalleries(galleries));
-    // console.log(galleries);
+    if (galleries.current_page > 1) {
+      yield put(appendGalleries(galleries));
+    } else {
+      yield put(setGalleries(galleries));
+    }
   } catch (error) {
     console.log('get all galleries', error);
   }

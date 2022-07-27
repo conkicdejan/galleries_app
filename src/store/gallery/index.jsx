@@ -13,4 +13,6 @@ export {
   setAddCommentErrors,
   setNewComment,
   setDeletedComment,
+  appendGalleries,
+  setCurrentPage,
 } from './slice';
