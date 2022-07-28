@@ -11,7 +11,7 @@ function Search() {
     setSearch('');
     navigate({
       pathname: location.pathname,
-      search: `filter=${search}`,
+      search: search && `filter=${search}`,
     });
   }
 
@@ -28,13 +28,9 @@ function Search() {
             placeholder="Search"
           />
         </div>
-        <button
-          className="btn btn-primary"
-          onClick={handleFilter}
-        >
+        <button className="btn btn-primary" onClick={handleFilter}>
           <i className="fas fa-search">Filter</i>
         </button>
-        
       </div>
     </form>
   );
