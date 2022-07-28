@@ -17,8 +17,8 @@ function* registerHandler({ payload }) {
   try {
     const data = yield call(AuthService.register, payload);
     localStorage.setItem('token', data.token);
-    yield put(setToken(data));
-    yield put(setUser(data));
+    yield put(setToken(data.token));
+    yield put(setUser(data.user));
   } catch (error) {
     console.error('registerHandler', error);
     if (error.response.status === 422) {
@@ -32,8 +32,8 @@ function* loginHandler({ payload }) {
     yield put(setLoginError(null));
     const data = yield call(AuthService.login, payload);
     localStorage.setItem('token', data.token);
-    yield put(setToken(data));
-    yield put(setUser(data));
+    yield put(setToken(data.token));
+    yield put(setUser(data.user));
   } catch (error) {
     console.error('loginHandler', error);
     if (error.response.status === 401) {
