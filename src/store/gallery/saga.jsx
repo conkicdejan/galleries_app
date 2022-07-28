@@ -19,6 +19,9 @@ import GalleryService from './../../services/GalleryService';
 import CommentService from '../../services/CommentService';
 
 function* getGalleriesHandler({ payload }) {
+  if (!(payload.page > 1)) {
+    yield put(setGalleries(null));
+  }
   try {
     const galleries = yield call(GalleryService.getAll, payload);
     if (galleries.current_page > 1) {
