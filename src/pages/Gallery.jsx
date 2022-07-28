@@ -10,6 +10,7 @@ import formatDate from '../components/formatDate';
 import { selectAuthUser } from '../store/auth';
 import CommentForm from '../components/CommentForm';
 import Comment from './../components/Comment';
+import CarouselComponent from './../components/CarouselComponent';
 
 function SingleGallery() {
   const navigate = useNavigate();
@@ -97,11 +98,7 @@ function SingleGallery() {
       </p>
       <p>created at: {formatDate(created_at)}</p>
       <p>description: {description}</p>
-      {images.map((image, index) => (
-        <a key={index} href={image.url} target="_blank" rel="noreferrer">
-          <img src={image.url} className="img-thumbnail h200" alt="gallery" />
-        </a>
-      ))}
+      <CarouselComponent images={images} />
       <div className="mb-5">
         {comments?.map((comment, index) => (
           <div key={index} className="card mt-2">
