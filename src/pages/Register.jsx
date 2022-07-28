@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { register, selectRegisterErrors } from '../store/auth/index';
+import React, { useEffect, useState } from 'react';
+import { register, selectRegisterErrors, setRegisterErrors } from '../store/auth/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Register() {
@@ -14,6 +14,10 @@ function Register() {
     password_confirmation: '',
     terms: false,
   };
+
+  useEffect(() => {
+    dispatch(setRegisterErrors(''));
+  },[]);
 
   const [form, setForm] = useState(initialForm);
 

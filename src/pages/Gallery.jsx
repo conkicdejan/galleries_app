@@ -52,8 +52,8 @@ function SingleGallery() {
   }
 
   function handleDelete() {
-    const confirm = prompt('Type "delete" to confirm');
-    if (confirm === 'delete') {
+    const confirm = window.confirm("Do you want to delete gallery?")
+    if (confirm) {
       dispatch(
         deleteGallery({
           id: galleryId,

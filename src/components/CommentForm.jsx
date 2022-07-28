@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addComment, selectAddCommentErrors } from '../store/gallery/index';
+import {
+  addComment,
+  selectAddCommentErrors,
+  setAddCommentErrors,
+} from '../store/gallery/index';
 import { useParams } from 'react-router-dom';
 
 function CommentForm() {
@@ -9,6 +13,10 @@ function CommentForm() {
   const addCommentErrors = useSelector(selectAddCommentErrors);
 
   const [content, setContent] = useState('');
+
+  useEffect(() => {
+    dispatch(setAddCommentErrors(''));
+  }, []);
 
   function handleSuccessAction() {
     setContent('');

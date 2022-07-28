@@ -9,8 +9,8 @@ function Comment({ comment }) {
   const authUser = useSelector(selectAuthUser);
 
   function handleDelete() {
-    const confirm = prompt('Type "delete" to confirm');
-    if (confirm === 'delete') {
+    const confirm = window.confirm("Do you want to delete comment?")
+    if (confirm) {
       dispatch(deleteComment(comment.id));
     }
   }
@@ -28,7 +28,7 @@ function Comment({ comment }) {
               className="btn btn-danger btn-sm mx-1 col-1"
               onClick={handleDelete}
             >
-              delete
+              Delete
             </button>
           )}
         </div>

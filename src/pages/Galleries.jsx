@@ -57,17 +57,20 @@ function Galleries() {
                 <GalleryComponent key={gallery.id} gallery={gallery} />
               ))}
             </div>
-            <button
-              type="button"
-              className="btn btn-primary mb-2"
-              disabled={galleries.current_page >= galleries.last_page}
-              onClick={handleLoadMore}
-            >
-              Load more{' '}
-              {galleries?.total - galleries?.to < 10
-                ? galleries?.total - galleries?.to
-                : galleries.per_page}
-            </button>
+            {galleries.current_page >= galleries.last_page ? (
+              ''
+            ) : (
+              <button
+                type="button"
+                className="btn btn-primary mb-2"
+                onClick={handleLoadMore}
+              >
+                Load more{' '}
+                {galleries?.total - galleries?.to < 10
+                  ? galleries?.total - galleries?.to
+                  : galleries.per_page}
+              </button>
+            )}
           </>
         ) : (
           'Nothing to show'

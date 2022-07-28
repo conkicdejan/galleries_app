@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, selectLoginError } from '../store/auth/index';
+import { login, selectLoginError, setLoginError } from '../store/auth/index';
 
 function Login() {
   const dispatch = useDispatch();
   const loginError = useSelector(selectLoginError);
-
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    dispatch(setLoginError(''));
+  },[]);
 
   function handleLogin(e) {
     e.preventDefault();

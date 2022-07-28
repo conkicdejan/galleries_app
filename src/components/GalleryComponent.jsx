@@ -8,7 +8,7 @@ function GalleryComponent({ gallery }) {
     <div className="row mb-4">
       <div className="col-12">
         <div className="card h-100" style={{ width: '250px' }}>
-          <img src={first_image?.url} className="card-img-top" alt="gallery" />
+          <img src={first_image?.url} className="card-img-top" alt="gallery" style={{ width: '250px', height: '180px', objectFit: 'contain' }}/>
           <div className="card-body">
             <Link to={`/galleries/${id}`}>
               <h5 className="card-title">{name}</h5>

@@ -6,6 +6,7 @@ import {
   getGallery,
   selectCreateErrors,
   selectGallery,
+  setCreateErrors,
 } from '../store/gallery/index';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectAuthUser } from '../store/auth';
@@ -34,8 +35,9 @@ function CreateGallery() {
         })
       );
     } else {
-      handleResetForm();
+      handleResetForm(); // Clear form when click on crete new gallery
     }
+    dispatch(setCreateErrors(''));
   }, [id]);
 
   // when gallery and auth user loading are finished -> fill the form
@@ -193,21 +195,14 @@ function CreateGallery() {
           </div>
         ))}
         <button className="btn btn-sm btn-primary my-2 mx-3">
-          {id ? 'Edit gallery' : 'Add gallery'}
-        </button>
-        <button
-          className="btn btn-sm btn-warning my-2 mx-3"
-          type="button"
-          onClick={handleResetForm}
-        >
-          clear form
+          Submit
         </button>
         <button
           className="btn btn-sm btn-warning my-2 mx-3"
           type="button"
           onClick={handleActionSuccess}
         >
-          cancel
+          Cancel
         </button>
         <button
           className="btn btn-sm btn-info my-2 mx-3 "
